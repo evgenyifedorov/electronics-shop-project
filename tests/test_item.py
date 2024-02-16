@@ -2,11 +2,9 @@ import pytest
 from src.item import Item
 from src.phone import Phone
 from config import ITEMS
+from src.item import InstantiateCSVError
 
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-
-
-
 
 
 @pytest.fixture
@@ -69,3 +67,13 @@ def test_str(item):
     """тест для метода str"""
     item1 = Item("Смартфон", 10000, 20)
     assert str(item1) == "Смартфон"
+
+
+def test_instantiate_from_csv_not():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('path.csv')
+
+
+def test_instantiate_from_csv_error():
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('items.csv')
